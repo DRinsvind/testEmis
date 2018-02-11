@@ -12,7 +12,6 @@ class Article extends Component{
         this.props.checkIdArticle(this.props.id)
     }
     getTitle = () =>{
-        console.log('проблемный пропс',this.props)
         if(this.props.fromArticleList){
             return (
                 <Link className="article-item__heading" to={`/${this.props.article._id}`}>{this.props.article.title}</Link>

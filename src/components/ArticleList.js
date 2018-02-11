@@ -7,7 +7,6 @@ import Loader from './Loader'
 class ArticleList extends Component{
 
     componentWillMount(){
-        console.log(this.props)
         this.props.checkAndLoadArticlesForPage(this.props.page)
     }
     componentWillReceiveProps({checkAndLoadArticlesForPage,page}){
