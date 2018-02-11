@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script defer src="/static/bundle.js"></script>
+	<style>
+		body{
+			font: 'San Francisco', Helvetica, Arial, san-serif;
+		}
+		.nodisplay{
+			display: none;
+		}
+		.empty-articles{
+			text-align: center;
+			color:white;
+			font-weight: bold;
+
+		}
+		.user-error{
+			font-size: 16px;
+			margin-top: 20px;
+			color: red;
+			font-weight: bold
+		}
+		main{
+			min-height:100vh;
+			background-image: url('https://pp.userapi.com/c840537/v840537085/52420/zjWVNDlm9KE.jpg');
+			background-repeat: repeat;
+			background-size: contain;
+		}
+		.user-block{
+			padding: 50px 0px 50px;
+			
+		}
+		.user-form__wrapper{
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+		.user-form{
+			background-color:white;
+			display: flex;
+			flex-direction: column;
+			padding: 20px 30px;
+			border-radius: 3px;
+			justify-content: center;
+			align-items: center;
+			min-height: 210px;
+		}
+		.user-input{
+			
+			display: block;
+			position: relative;
+			width:100%;
+			max-width: 400px;
+			border:none;
+			border-bottom:2px solid #E0E0E0;
+			outline: none;
+			padding: 10px 3px 8px;
+		}
+		.input-wrapper{
+			
+			position: relative;
+			width:100%;
+			max-width: 400px;
+			margin-bottom: 25px;
+			
+		}
+		.input-wrapper:after{
+			content: '';
+			width:0%;
+			height: 2px;
+			position: absolute;
+			left: 50%;
+			bottom: -2px;
+			background: red;
+		}
+		.input-wrapper:before{
+			content: '';
+			width:0%;
+			height: 2px;
+			position: absolute;
+			left: 0%;
+			bottom: -2px;
+			background: red;
+		}
+		.input-efect hr{
+			width:100%;
+			position: absolute;
+			bottom: 0px;
+			left:0px;
+			height: 2px;
+			border:0px;
+			background: #FF9800;
+			margin: 0px;
+			transform: scale(0);
+			transition-property: transform;
+			transition-duration: 500ms;
+		}
+		input:focus+.input-efect hr,textarea:focus+.input-efect hr{
+			transform: scale(1);
+		}
+		.user-button{
+
+			display: block;
+			position: relative;
+		    opacity: 1;
+		    font-size: 14px;
+		    letter-spacing: 0px;
+		    text-transform: uppercase;
+		    font-weight: 500;
+		    margin: 0px 10px 10px;
+		    user-select: none;
+		    cursor:pointer;
+		    padding:5px 16px;
+		    color: rgb(255, 255, 255);
+		    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+		    border-radius: 2px;
+		    background: #FF9800;
+		    outline: none;
+		    border:0px;
+			text-decoration: none;
+		}
+		.user-button:focus,.user-button:hover {
+    		opacity: 0.9;
+    		outline: none;
+    		border:0px;
+			color: rgb(255, 255, 255);
+			text-decoration: none;
+		}
+		.user-button:focus{
+			background: #EF6C00;
+		}
+		.user-heading{
+			margin-top: 40px;
+			font-size: 28px;
+			width:100%;
+			text-align: center;
+			margin-bottom: 60px;
+		}
+		@keyframes rotate-react {
+		  0% {
+		    transform: rotate(0deg);
+		  }
+
+		  50% {
+		    transform: rotate(180deg);
+		  }
+
+		  100%{
+			transform: rotate(360deg);
+		  }
+		}
+		.preloader{
+			width:90px;
+			height: 90px;
+			background-image: url(React-icon.svg);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			animation-name: rotate-react;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+			animation-duration: 2000ms;
+		}
+		.article-list{
+			
+			padding: 50px 0px 80px;
+			border-radius: 8px;
+			
+
+		}
+		.user-buttons,.article-item__buttons-block{
+			display: flex;
+		}
+		.article-item{
+			background: rgba(255,153,0,1);
+			background: -moz-linear-gradient(-45deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(255,153,0,1)), color-stop(24%, rgba(255,0,225,1)), color-stop(51%, rgba(255,153,0,1)), color-stop(71%, rgba(255,0,225,1)), color-stop(100%, rgba(255,153,0,1)));
+			background: -webkit-linear-gradient(-45deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			background: -o-linear-gradient(-45deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			background: -ms-linear-gradient(-45deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			background: linear-gradient(135deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9900', endColorstr='#ff9900', GradientType=1 );
+			padding: 2px;
+			/*animation-name: article-back;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+			animation-duration: 500ms;*/
+			border-radius: 5px;
+			box-shadow: 0px 5px 9px rgba(255,255,255,0.2);
+			margin-bottom: 30px;
+		}
+		.article-item__wrapper{
+			padding: 15px;
+			border-radius: 5px;
+			border:2px solid #FF9800;
+			background-color: white;
+		}
+		.pagination-list{
+			padding: 3px;
+			border-radius: 9px;
+			background: rgba(255,153,0,1);
+			background: -moz-linear-gradient(-45deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(255,153,0,1)), color-stop(24%, rgba(255,0,225,1)), color-stop(51%, rgba(255,153,0,1)), color-stop(71%, rgba(255,0,225,1)), color-stop(100%, rgba(255,153,0,1)));
+			background: -webkit-linear-gradient(-45deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			background: -o-linear-gradient(-45deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			background: -ms-linear-gradient(-45deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			background: linear-gradient(135deg, rgba(255,153,0,1) 0%, rgba(255,0,225,1) 24%, rgba(255,153,0,1) 51%, rgba(255,0,225,1) 71%, rgba(255,153,0,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9900', endColorstr='#ff9900', GradientType=1 );
+			
+		}
+		.pagination-list__wrapper{
+			background-color: white;
+			border-radius: 9px;
+			height: 50px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.pagination-list__item{
+			padding: 0px 20px;
+		}
+		textarea{
+			resize:none;
+		}
+		.user-input--article-form,.input-wrapper--article-form{
+			width: 100%;
+			max-width: 100%;
+		}
+		.page-404{
+			height: 600px;
+		}
+		.page-404__img{
+			max-height: 100%;
+			margin: 0px auto;
+			display: block;
+			border-radius: 5px;
+			max-width: 100%;
+		}
+		.article-item__heading{
+			font-weight: 700;
+			text-transform: uppercase;
+			color:black;
+			text-decoration: none;
+			font-size: 30px;
+		}
+		a.article-item__heading:hover{
+			color:black;
+
+		}
+	</style>
+</head>
+<body>
+	<main>
+	<div id="content">
+		<!--<section class="user-block">-->
+			<!--<div class="container">-->
+
+				<!--<div class="row justify-content-center">-->
+					<!--<div class="col-12 col-md-8 col-xl-6">-->
+						<!--&lt;!&ndash; <form action="" class="user-form">-->
+							<!--<div class="input-wrapper">-->
+								<!--<input class='user-input' type="text" placeholder="Enter your login">-->
+								<!--<div class="input-efect">-->
+									<!--<hr>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="input-wrapper">-->
+								<!--<input class='user-input' type="password" placeholder="Enter your password">-->
+								<!--<div class="input-efect">-->
+									<!--<hr>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<button class="user-button">Login</button>-->
+						<!--</form> &ndash;&gt;-->
+
+						<!--<form action="" class="user-form">-->
+							<!--<h2 class="user-heading">Hello Username</h2>-->
+
+							<!--<div class="user-buttons">-->
+								<!--<button class="user-button">Create Ad</button>-->
+								<!--<button class="user-button">Logout</button>-->
+							<!--</div>-->
+
+
+						<!--</form>-->
+						<!--&lt;!&ndash; <form action="" class="user-form">-->
+							<!--<div class="preloader"></div>-->
+						<!--</form> &ndash;&gt;-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</section>-->
+		<!--<section class="article-block">-->
+			<!--<div class="container">-->
+			<!--<div class="row justify-content-center">-->
+					<!--<div class="col-8"></div>-->
+				<!--</div>-->
+				<!--<div class="row justify-content-center article-list">-->
+					<!--<div class="col-12 col-lg-10 col-xl-8">-->
+						<!--<div class="article-item">-->
+							<!--<div class="article-item__wrapper">-->
+								<!--<div class="article-item__top-side">-->
+									<!--<h2 class="article-item__heading">Article title</h2>-->
+									<!--<p class="article-item__author-block">Username Name</p>-->
+								<!--</div>-->
+								<!--<p class="article-item__text">-->
+									<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nihil consectetur optio reiciendis. Est, sapiente, quos. Eveniet exercitationem quaerat repellendus velit magnam architecto quod qui fugit, nostrum in, numquam soluta.-->
+								<!--</p>-->
+								<!--<p class="article-item__date">18.01.2017</p>-->
+								<!--<div class="uarticle-item__buttons-block">-->
+									<!--<button class="user-button">Edit</button>-->
+									<!--<button class="user-button">Delete</button>-->
+								<!--</div>-->
+								<!--</div>-->
+
+						<!--</div>-->
+						<!--<div class="article-item">-->
+							<!--<div class="article-item__wrapper">-->
+								<!--<div class="article-item__top-side">-->
+									<!--<h2 class="article-item__heading">Article title</h2>-->
+									<!--<p class="article-item__author-block">Username Name</p>-->
+								<!--</div>-->
+								<!--<p class="article-item__text">-->
+									<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nihil consectetur optio reiciendis. Est, sapiente, quos. Eveniet exercitationem quaerat repellendus velit magnam architecto quod qui fugit, nostrum in, numquam soluta.-->
+								<!--</p>-->
+								<!--<p class="article-item__date">18.01.2017</p>-->
+								<!--<div class="uarticle-item__buttons-block">-->
+									<!--<button class="user-button">Edit</button>-->
+									<!--<button class="user-button">Delete</button>-->
+								<!--</div>-->
+								<!--</div>-->
+
+						<!--</div>-->
+						<!--<div class="article-item">-->
+							<!--<div class="article-item__wrapper">-->
+								<!--<div class="article-item__top-side">-->
+									<!--<h2 class="article-item__heading">Article title</h2>-->
+									<!--<p class="article-item__author-block">Username Name</p>-->
+								<!--</div>-->
+								<!--<p class="article-item__text">-->
+									<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nihil consectetur optio reiciendis. Est, sapiente, quos. Eveniet exercitationem quaerat repellendus velit magnam architecto quod qui fugit, nostrum in, numquam soluta.-->
+								<!--</p>-->
+								<!--<p class="article-item__date">18.01.2017</p>-->
+								<!--<div class="uarticle-item__buttons-block">-->
+									<!--<button class="user-button">Edit</button>-->
+									<!--<button class="user-button">Delete</button>-->
+								<!--</div>-->
+								<!--</div>-->
+
+						<!--</div>-->
+						<!--<div class="article-item">-->
+							<!--<div class="article-item__wrapper">-->
+								<!--<div class="article-item__top-side">-->
+									<!--<h2 class="article-item__heading">Article title</h2>-->
+									<!--<p class="article-item__author-block">Username Name</p>-->
+								<!--</div>-->
+								<!--<p class="article-item__text">-->
+									<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nihil consectetur optio reiciendis. Est, sapiente, quos. Eveniet exercitationem quaerat repellendus velit magnam architecto quod qui fugit, nostrum in, numquam soluta.-->
+								<!--</p>-->
+								<!--<p class="article-item__date">18.01.2017</p>-->
+								<!--<div class="uarticle-item__buttons-block">-->
+									<!--<button class="user-button">Edit</button>-->
+									<!--<button class="user-button">Delete</button>-->
+								<!--</div>-->
+								<!--</div>-->
+
+						<!--</div>-->
+						<!--<div class="article-item">-->
+							<!--<div class="article-item__wrapper">-->
+								<!--<div class="article-item__top-side">-->
+									<!--<h2 class="article-item__heading">Article title</h2>-->
+									<!--<p class="article-item__author-block">Username Name</p>-->
+								<!--</div>-->
+								<!--<p class="article-item__text">-->
+									<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nihil consectetur optio reiciendis. Est, sapiente, quos. Eveniet exercitationem quaerat repellendus velit magnam architecto quod qui fugit, nostrum in, numquam soluta.-->
+								<!--</p>-->
+								<!--<p class="article-item__date">18.01.2017</p>-->
+								<!--<div class="uarticle-item__buttons-block">-->
+									<!--<button class="user-button">Edit</button>-->
+									<!--<button class="user-button">Delete</button>-->
+								<!--</div>-->
+								<!--</div>-->
+
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="col-12 col-lg-10 col-xl-8 pagination-list">-->
+						<!--<div class="pagination-list__wrapper">-->
+							<!--<div class="pagination-list__item">1</div>-->
+							<!--<div class="pagination-list__item">2</div>-->
+							<!--<div class="pagination-list__item">3</div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</section>-->
+	</div>
+
+		
+	</main>
+</body>
+</html>

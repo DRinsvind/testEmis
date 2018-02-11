@@ -1,0 +1,11 @@
+export const articles =[]
+export const CHECK_USER = 'CHECK_USER'
+export const START = 'START'
+export const FINISH = 'FINISH'
+export const FAIL = 'FAIL'
+export const LOGOUT = 'LOGOUT'
+export const DELETE_ARTICLE = 'DELETE_ARTICLE'
+export const CREATE_ARTICLE = 'CREATE_ARTICLE'
+export const CHECK_ARTICLES = 'CHECK_ARTICLES'
+export const CHANGE_ARTICLE = 'CHANGE_ARTICLE'
+export const LOAD_ARTICLES_FOR_PAGE = 'LOAD_ARTICLES_FOR_PAGE'
