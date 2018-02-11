@@ -9,7 +9,7 @@ class UserForm extends Component{
     }
     getHome = () =>{
         return(
-            <Link to="/" className="user-button">Home</Link>
+            <Link to="/" className="user-button">ALL ADS</Link>
         )
     }
     render(){
@@ -25,6 +25,7 @@ class UserForm extends Component{
                     </Switch>
                     <Switch>
                         <Route path="/" exact/>
+                        <Route path="/page" />
                         <Route path="/*" render={this.getHome} />
                     </Switch>
                     <button className="user-button" onClick={this.props.logout}>Logout</button>
